@@ -52,10 +52,10 @@ class DeepSpeakerDataset(data.Dataset):
                 l.strip().split(",") for l in sources_file
             ]
         self.sources = [{
-                'speaker': frames_fname.split('_')[0]
+                'speaker': frames_fname.split('_')[0],
                 'root': self.root,
                 'frames_fname': frames_fname,
-                'name': self.name,
+                'name': self.root.name,
                 'wav_path': wav_path
             }
             for frames_fname, wav_path 
@@ -63,9 +63,12 @@ class DeepSpeakerDataset(data.Dataset):
         ]
         df = pd.DataFrame(self.sources)
         df_speakers = df.groupby('speaker')
-        for _, speaker_df in df_speaker:
+        for _, speaker_df in df_speakers:
              self.speakers.append(
-                 Speaker(sources=speaker_df.to_dict('records'))
+                 Speaker(
+                     root=self.root,
+                     sources=speaker_df.to_dict('records')
+                 )
              )
 
         classes, class_to_idx = find_classes(self.speakers)        
