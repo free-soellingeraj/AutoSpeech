@@ -4,10 +4,10 @@ from pathlib import Path
 
 # Contains the set of utterances of a single speaker
 class Speaker:
-    def __init__(self, sources):
+    def __init__(self, root: Path, sources: list):
         self.root = root
+        self.name = self.root.name
         # self.partition = partition
-        self.name = root.name
         self.utterances = None
         self.utterance_cycler = None
         self.sources = sources
