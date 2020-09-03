@@ -18,7 +18,7 @@ def compute_mean_std(dataset_dir, output_path_mean, output_path_std):
     count = 0
     n = len(sources)
     for i, source in enumerate(sources):
-        feature = np.load(source[0].joinpath(source[1]))
+        feature = np.load(source['root'].joinpath(source['frames_fname']))
         sumx += feature.sum(axis=0)
         sumx2 += (feature * feature).sum(axis=0)
         count += feature.shape[0]
